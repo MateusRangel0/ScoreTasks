@@ -1,28 +1,19 @@
-import React from 'react';
-import './App.css';
+import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
+import { Container } from 'react-bootstrap'
+import TaskForm from './components/TaskForm/TaskForm'
+import TaskView from './components/TaskView/TaskView'
 
-function App() {
-  return (
-
-    <div className="container">
-      <h1>ScoreTasks</h1>
-    
-      <div className='content'>
-        <form>
-          <label htmlFor="task"></label>
-          <input
-            id="task"
-            type="task"
-            placeholder="Crie uma nova tarefa"
-          />
-
-          <button className="btn" type="submit">Criar</button>
-        </form>
-      </div>
-    </div>
-  );
-
-  
+class App extends Component {
+  render(){
+    return (
+      <Container>
+        <h1>ScoreTasks</h1>
+        <Route exact path='/' component={TaskForm}/>
+        <Route exact path='/view' component={TaskView}/>
+      </Container>
+    );
+  }  
 }
 
 export default App;
