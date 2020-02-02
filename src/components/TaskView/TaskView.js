@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Container, Col, Row, Card } from 'react-bootstrap'
-import axios from 'axios'
+import { Col, Row, Card, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom';
+import Axios from 'axios'
 
 class TaskView extends Component {
   
@@ -9,7 +10,13 @@ class TaskView extends Component {
   }
 
   componentDidMount = () => {
-    axios.get('https://scoretasks.herokuapp.com/task')
+    const token = localStorage.getItem('Token')
+    Axios.get('https://scoretasks.herokuapp.com/task', {
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': token
+      }
+    })
       .then((res) => {
         this.setState({tasks: res.data.data})
       })
@@ -18,22 +25,23 @@ class TaskView extends Component {
   render(){
     const { tasks } = this.state
     return (
-      <Container>
+      <div>
+        <Link to="/nova_tarefa"><Button variant="dark">Nova Tarefa</Button></Link> 
         <Row>
           {
             tasks.map((e, index) => 
-              <Col key={index} md={6}>
-                <Card.Title>
-                  {e.name} {' - '} {e.points} pontos
-                </Card.Title>
-                <Card body>
-                  {e.description}
+              <Col key={index} md={3}>
+                <Card bg="dark" text="white">
+                  <Card.Header>{e.name} {' - '} {e.points} pontos</Card.Header>
+                  <Card.Body>
+                    <Card.Title>{e.description}</Card.Title>
+                  </Card.Body>
                 </Card>
               </Col>
             )
           }
         </Row>
-      </Container>
+      </div>
     );
   }  
 }

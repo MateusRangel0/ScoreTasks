@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Form, Button, Col, Row } from 'react-bootstrap'
+import Axios from 'axios'
 
 class TaskForm extends Component {
 
@@ -12,6 +13,16 @@ class TaskForm extends Component {
 
   submit = (event) => {
     event.preventDefault()
+    const token = localStorage.getItem('Token')
+    const data = this.state
+    Axios.post('https://scoretasks.herokuapp.com/task', data, {
+      headers: {
+        'Content-Type': 'application/json',
+        'authorization': token
+      }
+    }).then((res) => {
+      console.log(res)
+    })
   }
 
   handleName = (event) => {
@@ -49,9 +60,6 @@ class TaskForm extends Component {
               placeholder="Digite o nome da task"
             />
           </Form.Group>
-        </Form>
-
-        <Form onSubmit={this.submit}>
           <Form.Group controlId="Description">
             <Form.Label>Descrição da Task</Form.Label>
             <Form.Control 
@@ -60,9 +68,6 @@ class TaskForm extends Component {
               placeholder="Digite a descrição da task"
             />
           </Form.Group>
-        </Form>
-
-        <Form onSubmit={this.submit}>
           <Form.Group controlId="points">
             <Form.Label>Pontuação da task</Form.Label>
             <Form.Control 
@@ -73,26 +78,22 @@ class TaskForm extends Component {
               placeholder="Digite a pontuação da task"
             />
           </Form.Group>
-        </Form>
-
-        <Form>
           <Row>
-          <Col md={2}>
-            <Form.Label>A task é positiva?</Form.Label>
-          </Col>
-          <Col>
-            <Form.Check 
-              type="switch"
-              id="positive"
-              label=""
-              onChange={this.handlePositive}
-              value={positive}
-            />
-          </Col>
-        </Row>  
-        <Button variant="dark">Criar</Button>          
+            <Col md={2}>
+              <Form.Label>A task é positiva?</Form.Label>
+            </Col>
+            <Col>
+              <Form.Check 
+                type="switch"
+                id="positive"
+                label=""
+                onChange={this.handlePositive}
+                checked={positive}
+              />
+            </Col>
+          </Row>  
+          <Button type="submit" variant="dark">Criar</Button>          
         </Form>
-
       </Container>
     );
   }  

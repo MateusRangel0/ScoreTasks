@@ -1,19 +1,28 @@
 import React, { Component } from 'react';
-import { Container, Form, Button } from 'react-bootstrap'
+import { Container, Form, Button, Row, Col } from 'react-bootstrap'
+import { Link } from 'react-router-dom';
+import Axios from 'axios';
 
 class LoginForm extends Component {
 
   state = {
-    userName:'',
+    username:'',
     password: ''
   }
 
   submit = (event) => {
     event.preventDefault()
+    const data = this.state
+    Axios.post('https://scoretasks.herokuapp.com/login', data, {
+      headers: {'Content-Type': 'application/json'}
+    }).then((res) => {
+      if(res.data.auth) localStorage.setItem('Token', res.data.token)
+      document.location.reload(true)
+    })
   }
 
   handleUserName = (event) => {
-    this.setState({userName: event.target.value})
+    this.setState({username: event.target.value})
   }
 
   handlePassword = (event) => {
@@ -22,7 +31,7 @@ class LoginForm extends Component {
 
   render(){
     const {
-        userName,
+        username,
         password
     } = this.state
 
@@ -33,13 +42,10 @@ class LoginForm extends Component {
             <Form.Label>Nome de usuário</Form.Label>
             <Form.Control 
               onChange={this.handleUserName} 
-              value={userName} 
+              value={username} 
               placeholder="Digite seu nome de usuário"
             />
         </Form.Group>
-      </Form>
-
-      <Form onSubmit={this.submit}>
         <Form.Group controlId="Password">
             <Form.Label>Senha</Form.Label>
             <Form.Control 
@@ -49,8 +55,16 @@ class LoginForm extends Component {
               placeholder="Digite sua senha"
             />
         </Form.Group>
+        <Row>
+          <Col md={1}>
+            <Button type="submit" variant="dark">Entrar</Button>    
+          </Col>
+          <Col>
+            <Link to="/cadastro"><Button variant="dark">Cadastrar</Button></Link>    
+          </Col>
+        </Row>
       </Form>
-      <Button variant="dark">Entrar</Button>    
+
     </Container>
     )
   }
