@@ -8,7 +8,8 @@ class TaskForm extends Component {
     name: '',
     description: '',
     points: 0,
-    positive: true //boolean
+    positive: true,
+    category: ''
   }
 
   submit = (event) => {
@@ -41,12 +42,17 @@ class TaskForm extends Component {
     this.setState({positive: event.target.value})
   }
 
+  handleCategory = (event) => {
+    this.setState({category: event.target.value})
+  }
+
   render(){
     const { 
       name,
       description,
       points,
-      positive
+      positive,
+      category
     } = this.state
 
     return (
@@ -68,7 +74,7 @@ class TaskForm extends Component {
               placeholder="Digite a descrição da task"
             />
           </Form.Group>
-          <Form.Group controlId="points">
+          <Form.Group controlId="Points">
             <Form.Label>Pontuação da task</Form.Label>
             <Form.Control 
               type="number" 
@@ -76,6 +82,14 @@ class TaskForm extends Component {
               onChange={this.handlePoints} 
               value={points} 
               placeholder="Digite a pontuação da task"
+            />
+          </Form.Group>
+          <Form.Group controlId="Category">
+            <Form.Label>Categoria da task</Form.Label>
+            <Form.Control
+              onChange={this.handleCategory} 
+              value={category} 
+              placeholder="Digite a categoria da task"
             />
           </Form.Group>
           <Row>

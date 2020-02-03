@@ -42,16 +42,20 @@ class TaskView extends Component {
         <Link to="/nova_tarefa"><Button variant="dark">Nova Tarefa</Button></Link>
         <Row>
           {
-            tasks.map((e, index) =>
-              <Col key={index} md={3}>
-                <Card bg="dark" text="white">
-                  <Card.Header>{e.name} {' - '} {e.points} pontos</Card.Header> 
-                  <Card.Body>
-                    <Card.Title>{e.description}</Card.Title>
-                  </Card.Body>
-                </Card>
-              </Col>
-            )
+          tasks.map((e, index) =>
+            <Col key={index} md={3}>
+              <Card bg="dark" text="white">
+                <Card.Header>{e.name} {' - '} {e.points} pontos</Card.Header> 
+                <Card.Body>
+                  <Card.Title>{e.description}</Card.Title>
+                  <Card bg="dark" text="white">
+                    <Card.Text>Categorias</Card.Text>
+                    <Card.Text>{e.category}</Card.Text>
+                  </Card>
+                </Card.Body>
+              </Card>
+            </Col>
+          )
           }
           <Card bg="dark" text="white" style={{ width: '12rem' }}>
             <Card.Body>
