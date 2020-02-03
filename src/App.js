@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import { Container } from 'react-bootstrap'
 import Top from './components/Top/Top'
 import TaskForm from './components/TaskForm/TaskForm'
-import TaskView from './components/TaskView/TaskView'
+import TaskView from './components/HomePage/TaskView'
 import Login from './components/Login/Login';
 import RegisterUser from './components/RegisterUser/RegisterUser';
 
